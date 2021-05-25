@@ -1,0 +1,19 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="table-dark">
+                <th *ngFor="let h of TableHeaders" (click)="applySort(h)">{{h}}
+                    <i class="fa fa-fw"
+                        [ngClass]="{'fa-sort':sortProperty!==h,'fa-sort-asc':sortType==='asc' && sortProperty===h,'fa-sort-desc':sortType==='desc' && sortProperty===h}"></i>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let d of DataSource" (click)="selectRow(d)" [focusonhover]="'large'">
+                <td *ngFor="let h of TableHeaders">{{d[h]}}</td>
+                <td style="color: red;" (click)="deleteRow(d)">X</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

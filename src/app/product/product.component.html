@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <app-grid [DataSource]="products" [TableHeaders]="tableHeaders" (dataDeleteEvent)="deleteProduct($event)"
+                (dataSelectEvent)="selectProduct($event)">
+            </app-grid>
+        </div>
+        <div class="col-md">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="container">
+                                    <div class="form-group">
+                                        <label>Id</label>
+                                        <input type="text" class="form-control" [(ngModel)]="product.Id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Product Id</label>
+                                        <input type="text" class="form-control" [(ngModel)]="product.ProductId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Product Name</label>
+                                        <input type="text" class="form-control" [(ngModel)]="product.ProductName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Category Name</label>
+                                        <app-dropdown [DataSource]="categories" [SelectedValue]="product.CategoryName" (changeEvent)="getCategoryName($event)"></app-dropdown>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Manufacturer</label>
+                                        <app-dropdown [DataSource]="manufacturers" [SelectedValue]="product.Manufacturer" (changeEvent)="getManufacturerName($event)"></app-dropdown>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" [(ngModel)]="product.Description">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>BasePrice</label>
+                                        <input type="text" class="form-control" [(ngModel)]="product.BasePrice">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="button" value="Clear" (click)="btnClear()" class="btn btn-primary">
+                                        <input type="button" value="Save" (click)="btnSave()"
+                                            class="btn btn-success float-end">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

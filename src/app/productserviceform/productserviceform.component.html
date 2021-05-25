@@ -1,0 +1,122 @@
+<div *ngIf="showloader" class="spinner-grow d-flex justify-content-center" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+<div *ngIf="!showloader" class="container">
+    <div class="row">
+        <div class="col-md">
+            <app-grid [DataSource]="products" [TableHeaders]="tableHeaders" (dataDeleteEvent)="deleteProduct($event)"
+                (dataSelectEvent)="selectProduct($event)">
+            </app-grid>
+        </div>
+        <div class="col-md">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form [formGroup]="formProduct" (ngSubmit)="btnSave()">
+                                    <div class="container">
+                                        <div class="form-group">
+                                            <label>Id</label>
+                                            <input [uniqueidvalidator]="products" type="text" class="form-control"
+                                                formControlName="ProductRowId">
+                                            <div *ngIf="formProduct.controls.ProductRowId.dirty && !formProduct.controls.ProductRowId.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.ProductRowId.errors?.required">This field is
+                                                    required</p>
+                                                <p *ngIf="formProduct.controls.ProductRowId.errors?.minlength">Allowed min length
+                                                    is 2</p>
+                                                <p *ngIf="formProduct.controls.ProductRowId.errors?.maxlength">Allowed max length
+                                                    is 10</p>
+                                                <p *ngIf="formProduct.controls.ProductRowId.errors?.pattern">Allowed numeric
+                                                    vales only</p>
+                                                <p *ngIf="formProduct.controls.ProductRowId.errors?.duplicate">Id already exists
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Product Id</label>
+                                            <input type="text" class="form-control" formControlName="ProductId">
+                                            <div *ngIf="formProduct.controls.ProductId.dirty && !formProduct.controls.ProductId.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.ProductId.errors?.required">This field is
+                                                    required</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input type="text" class="form-control" formControlName="ProductName">
+                                            <div *ngIf="formProduct.controls.ProductName.dirty && !formProduct.controls.ProductName.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.ProductName.errors?.required">This field
+                                                    is
+                                                    required</p>
+                                                <p *ngIf="formProduct.controls.ProductName.errors?.minlength">Allowed
+                                                    min length
+                                                    is 1</p>
+                                                <p *ngIf="formProduct.controls.ProductName.errors?.pattern">Should start
+                                                    with upper case</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Category Name</label>
+                                            <select class="form-control" formControlName="CategoryName">
+                                                <option *ngFor="let c of categories" value={{c}}>{{c}}</option>
+                                            </select>
+                                            <div *ngIf="formProduct.controls.CategoryName.dirty && !formProduct.controls.CategoryName.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.CategoryName.errors?.required">This field
+                                                    is
+                                                    required</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Manufacturer</label>
+                                            <select class="form-control" formControlName="Manufacturer">
+                                                <option *ngFor="let m of manufacturers" value={{m}}>{{m}}</option>
+                                            </select>
+                                            <div *ngIf="formProduct.controls.Manufacturer.dirty && !formProduct.controls.Manufacturer.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.Manufacturer.errors?.required">This field
+                                                    is
+                                                    required</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control" formControlName="Description">
+                                            <div *ngIf="formProduct.controls.Description.dirty && !formProduct.controls.Description.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.Description.errors?.required">This field
+                                                    is
+                                                    required</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>BasePrice</label>
+                                            <input type="text" class="form-control" formControlName="BasePrice">
+                                            <div *ngIf="formProduct.controls.BasePrice.dirty && !formProduct.controls.BasePrice.valid"
+                                                class="alert alert-danger">
+                                                <p *ngIf="formProduct.controls.BasePrice.errors?.required">This field
+                                                    is
+                                                    required</p>
+                                                <p *ngIf="formProduct.controls.BasePrice.errors?.pattern">Only numeric
+                                                    values allowed</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="button" value="Clear" (click)="btnClear()"
+                                                class="btn btn-primary">
+                                            <input type="submit" value="Save" [disabled]='!formProduct.valid'
+                                                class="btn btn-success float-end">
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
