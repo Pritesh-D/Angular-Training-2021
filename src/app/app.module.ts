@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Injector } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { createCustomElement } from '@angular/elements'
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
 import { CalculatorComponent } from './calculator/calculator.component';
@@ -14,6 +14,13 @@ import { FocusonhoverDirective } from './directives/focusonhover.directive';
 import { UniqueidvalidatorDirective } from './directives/uniqueidvalidator.directive';
 import { ProductserviceformComponent } from './productserviceform/productserviceform.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DropdownEmelentComponent } from './customelements/app.dropdown.element';
+import { DropdownconusumerComponent } from './customelements/app.dropdownconsumer.component';
+
+import './litelements/app.simple.litelement';
+import { LitElementConsumerComponent } from './litelements/app.litconsumer.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,7 +33,10 @@ import { HttpClientModule } from '@angular/common/http';
     ProductformComponent,
     FocusonhoverDirective,
     UniqueidvalidatorDirective,
-    ProductserviceformComponent
+    ProductserviceformComponent,
+    DropdownEmelentComponent,
+    DropdownconusumerComponent,
+    LitElementConsumerComponent
   ],
   imports: [
     BrowserModule,
@@ -34,15 +44,24 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
+      { path: 'litelement', component: LitElementConsumerComponent },
+      { path: 'customelement', component: DropdownconusumerComponent },
       { path: 'productserviceform', component: ProductserviceformComponent },
       { path: 'productform', component: ProductformComponent },
       { path: 'product', component: ProductComponent },
       { path: 'calculator', component: CalculatorComponent },
       { path: 'table', component: TableComponent },
-      { path: '', redirectTo: 'productserviceform', pathMatch: 'full' }
+      { path: '', redirectTo: '', pathMatch: 'full' }
     ])
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [DropdownEmelentComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    const dropdownElement = createCustomElement(DropdownEmelentComponent, { injector: this.injector });
+    customElements.define('dropdown-element',dropdownElement);
+  }
+}
